@@ -75,6 +75,9 @@ CREATE TABLE Planograma(
     nro INTEGER,
     num_serie INTEGER,
     fabricante VARCHAR(255),
+    faces INTEGER, /* ADDED: */ 
+    unidades INTEGER,
+    loc VARCHAR(255),
     PRIMARY KEY(ean, nro, num_serie, fabricante),
     FOREIGN KEY(nro, num_serie, fabricante) REFERENCES Prateleira(nro, num_serie, fabricante)
 );

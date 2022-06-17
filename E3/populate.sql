@@ -34,7 +34,7 @@ insert into Tem_categoria values ('9781250111173', 'Lacticinios');
 insert into Tem_categoria values ('9781786495259', 'Peixe');
 insert into Tem_categoria values ('9781619634466', 'Iogurte');
 insert into Tem_categoria values ('9780439023481', 'Queijo');
-insert into Tem_categoria values ('1111222233309', 'Lacticinios');
+insert into Tem_categoria values ('9781786495259', 'Lacticinios');
 
 insert into IVM values ('155310', 'Fabricante 1');
 insert into IVM values ('209265', 'Fabricante 2');
@@ -63,6 +63,17 @@ insert into Prateleira values (1, '209265', 'Fabricante 2', 2.7, 'Carne');
 insert into Prateleira values (2, '209265', 'Fabricante 2', 4.0, 'Peixe');
 insert into Prateleira values (1, '155310', 'Fabricante 1', 1.8, 'Peixe');
 insert into Prateleira values (2, '155310', 'Fabricante 1', 1.5, 'Iogurte');
+
+insert into Planograma values ('9780525555230', '572734', 'Fabricante 5', 2, 10); /* missing loc*/
+insert into Planograma values ('9780312330873', '572734', 'Fabricante 5', 1, 8);
+insert into Planograma values ('9781619634466', '432944', 'Fabricante 4', 4, 5);
+insert into Planograma values ('9781471184307', '432944', 'Fabricante 4', 2, 12);
+insert into Planograma values ('9781250111173', '348164', 'Fabricante 3', 1, 7);
+insert into Planograma values ('9781786495259', '348164', 'Fabricante 3', 3, 16);
+insert into Planograma values ('9781786495259', '209265', 'Fabricante 2', 2, 4);
+insert into Planograma values ('9780439023481', '209265', 'Fabricante 2', 4, 11);
+insert into Planograma values ('9781786892720', '155310', 'Fabricante 1', 1, 9);
+insert into Planograma values ('9780571334650', '155310', 'Fabricante 1', 2, 2);
 
 insert into Retalhista values ('4098484', 'Butcher Inc.');3
 insert into Retalhista values ('3261780', 'João dos Queijos');
