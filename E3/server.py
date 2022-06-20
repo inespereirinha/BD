@@ -21,8 +21,8 @@ queries = {
   "DELETE FROM Categoria where nome = %s",
   "INSERT INTO Retalhista VALUES (%s, %s)",
   "DELETE FROM Retalhista where tin = %s",
-  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto ORDER BY instante;",
-  "SELECT sub-categoria FROM "
+  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto ORDER BY instante GROUP BY cat;",
+  "SELECT super-categoria FROM Tem_outra where categoria = %s"
 }
 
 ## Runs the function once the root page is requested.
