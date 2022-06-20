@@ -16,14 +16,17 @@ DB_DATABASE=DB_USER
 DB_PASSWORD="mutz6626"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
 
-queries = {
+queries = [
   "INSERT INTO Categoria VALUES (%s);",
-  "DELETE FROM Categoria where nome = %s",
+  "DELETE FROM Categoria WHERE nome = %s;",
   "INSERT INTO Retalhista VALUES (%s, %s)",
-  "DELETE FROM Retalhista where tin = %s",
-  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto ORDER BY instante GROUP BY cat;",
-  "SELECT categoria FROM Tem_outra where super-categoria = %s"
-}
+  "DELETE FROM Responsavel_por WHERE tin = %s; \
+   DELETE FROM Evento_reposicao WHERE tin = %s; \
+   DELETE FROM Retalhista WHERE tin = %s",
+  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %d ORDER BY instante GROUP BY cat;",
+  "SELECT categoria FROM Tem_outra WHERE super_categoria = %s"
+]
+
 
 ## Runs the function once the root page is requested.
 ## The request comes with the folder structure setting ~/web as the root
@@ -40,21 +43,22 @@ def init():
   finally:
     cursor.close()
     dbConn.close()
+    
 
-@app.route('/inserirCategoria')
+@app.route('/inserirCategoria', methods=["POST"])
 def inserir_categoria():
   dbConn=None
   cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    data = (request.form["categoria_nome"])
-    cursor.execute(queries[0], data)
+    cursor.execute(queries[0], (request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
   finally:
     cursor.close()
+    dbConn.commit()
     dbConn.close()
 
 @app.route('/removerCategoria', methods=["POST"])
@@ -64,13 +68,13 @@ def remover_categoria():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    data = (request.form["categoria_nome"])
-    cursor.execute(queries[1], data)
+    cursor.execute(queries[1], (request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
   finally:
     cursor.close()
+    dbConn.commit()
     dbConn.close()
 
 @app.route('/inserirRetalhista', methods=["POST"])
@@ -80,13 +84,13 @@ def inserir_retalhista():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    data = (request.form["retalhista_tin"], request.form["retalhista_nome"])
-    cursor.execute(queries[2], data)
+    cursor.execute(queries[2], (request.form["retalhista_tin"], request.form["retalhista_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
   finally:
     cursor.close()
+    dbConn.commit()
     dbConn.close()
 
 @app.route('/removerRetalhista', methods=["POST"])
@@ -96,8 +100,23 @@ def remover_retalhista():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    data = (request.form["retalhista_tin"])
-    cursor.execute(queries[3], data)
+    cursor.execute(queries[3], (request.form["retalhista_tin"], request.form["retalhista_tin"], request.form["retalhista_tin"],))
+    return render_template("success.html", cursor=cursor)
+  except Exception as e:
+    return str(e) 
+  finally:
+    cursor.close()
+    dbConn.commit()
+    dbConn.close()
+
+@app.route('/listarEventos', methods=["POST"])
+def listar_eventos():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    cursor.execute(queries[4], (request.form["ivm_num_serie"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -105,35 +124,23 @@ def remover_retalhista():
     cursor.close()
     dbConn.close()
 
-@app.route('/listarEventos', methods=["POST"])
-def listar_eventos():
-  dbConn=None
-  cursor=None
-
 
 @app.route('/listarCategorias', methods=["POST"])
 def listar_categorias():
   dbConn=None
   cursor=None
-
-@app.route('/update', methods=["POST"])
-def update_balance():
-  dbConn=None
-  cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    # Esta versão é vuneravel a SQL injection
-    query = f'''UPDATE account SET balance=%s WHERE account_number = %s;'''
-    data = (request.form["balance"], request.form["account_number"])
-    cursor.execute(query, data)
-    return query
+    cursor.execute(queries[5], (request.form["categoria_nome"],))
+    return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
   finally:
     cursor.close()
     dbConn.close()
 
-app.run(host = '0.0.0.0')
+
+app.run(host = '0.0.0.0', port=5001)
 
 
