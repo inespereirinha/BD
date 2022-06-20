@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <head>
+        <title> Base de Dados </title>
+    </head>
+    <body>
+        {% if cursor %}
+        <table border="2px">
+        <thead>
+            <tr>
+            <th>Numero de Conta</th>
+            <th>Nome da Agência</th>
+            <th>Saldo</th>
+            <th>Alterar</th>
+            </tr>
+        </thead>
+        <tbody>      
+            {% for record in cursor %}
+            <tr>
+                <td>{{ record[0] }}</td>
+                <td>{{ record[1] }}</td>
+                <td>{{ record[2] }}</td>
+                <td><a href="balance?account_number={{ record[0] }}">Alterar saldo</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+            <p> Ação executada com sucesso!</p>
+        {% else %}
+            <p> Erro: ao obter dados da base de dados!</p>
+        {% endif %}
+        <a href="/"><button>VOLTAR PARA A PÁGINA PRINCIPAL</button></a>
+    </body>
+</html>
+<style>
+    body{
+        background: rgb(169, 214, 214);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    button{
+        border-radius: 10px;
+        background-color: rgb(60, 155, 155);
+        color: rgb(255, 255, 255);
+    }
+</style>

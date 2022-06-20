@@ -6,54 +6,61 @@
     </head>
     <body>
         <h1 class="apresentacao">Base de Dados -- 3ª entrega</h1>
-        <div>
-            <h2>a) Inserir e remover categorias e sub-categorias</h2>
+        <div class="container">
+			<div class="box">
+				<div class="box-row">
+					<div class="box-cell">
+						<h2>a) Inserir e remover categorias e sub-categorias</h2>
             
-            <form action = "inserirCategoria" method = "get" style=" float: left; margin-left: 100px;">
-                <h3>Inserir Categoria: </h3>
-                <input type = "text" name = "ins_cat" placeholder="Nome Categoria">
-                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
-            </form>
-            <form action = "removerCategoria" method = "get" style=" float: left; margin-left: 100px;">
-                <h3>Remover Categoria: </h3>
-                <input type = "text" name = "rem_cat" placeholder="Nome Categoria"> 
-                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px; "/>
-            </form>
-        </div>
-        <div style=" display:inline-block">
-            <h2 style="margin:25px;">b) Inserir e remover um retalhista, com todos os seus produtos, garantindo que esta operação seja
-                atómica</h2>
-            
-            <form action = "inserirRetalhista" method = "get" style=" float: left; margin-left: 100px;">
-                <h3>Inserir Retalhista:</h3>
-                <input type = "text" name = "ins_retalhista_tin" placeholder="TIN">
-                <input type = "text" name = "ins_retalhista_nome" placeholder="NOME">
-                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
-            </form>
-            <form action = "removerCategoria" method = "get" style=" float: left; margin-left: 100px;">
-                <h3>Remover Retalhista: </h3>
-                <input type = "text" name = "rem_retalhista_tin" placeholder="TIN">
-                <input type = "text" name = "rem_retalhista_nome" placeholder="NOME">
-                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
-            </form>
-        </div>
-        <div style=" display:inline-block">
-            <h2 style="margin:25px;">c) Listar todos os eventos de reposição de uma IVM, apresentando o número de unidades repostas por
-                categoria de produto;</h2>
-            <form action = "test.cgi" method = "get" style=" float: left; margin-left: 100px;">
-                <h3>IVM (num_serie): </h3>
-                <input type = "text" name = "ivm_num_serie" placeholder="Numero de Série IVM">
-                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px; "/>
-            </form>
-        </div>
-        <div style="display:inline-block">
-            <h2 style="margin:25px;">d) Listar todas as sub-categorias de uma super-categoria, a todos os níveis de profundidade.</h2>
-            <form action = "test.cgi" method = "get" style=" float: left; margin-left: 100px;">
-                <h3>Categoria: </h3>
-                <input type = "text" name = "nome_categoria" placeholder="Nome Categoria">
-                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px; "/>
-            </form>
-        </div>
+                        <form action = "inserirCategoria" method = "get">
+                            <h3>Inserir Categoria: </h3>
+                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Salgado'">
+                            <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
+                        </form>
+                        <form action = "removerCategoria" method = "post">
+                            <h3>Remover Categoria: </h3>
+                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Salgado'"> 
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+					</div>
+
+                    <div class="box-cell">
+                        <h2>b) Inserir e remover um retalhista, com todos os seus produtos, garantindo que esta operação seja
+                            atómica</h2>
+                        
+                        <form action = "inserirRetalhista" method = "post">
+                            <h3>Inserir Retalhista:</h3>
+                            <input type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'"/>
+                            <input type = "text" name = "retalhista_nome" placeholder="Nome, ex.: 'Butcher Inc.'"/>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                        <form action = "removerRetalhista" method = "post">
+                            <h3>Remover Retalhista: </h3>
+                            <input type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'">
+                            <input type = "text" name = "retalhista_nome" placeholder="Nome, ex.: 'Butcher Inc.'">
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </div>
+                    <div class="box-cell">
+                        <h2>c) Listar todos os eventos de reposição de uma IVM, apresentando o número de unidades repostas por
+                            categoria de produto;</h2>
+                        <form action = "listarEventos" method = "post">
+                            <h3>IVM (num_serie): </h3>
+                            <input type = "number" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310'"/>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </div>
+                    <div class="box-cell">
+                        <h2>d) Listar todas as sub-categorias de uma super-categoria, a todos os níveis de profundidade.</h2>
+                        <form action = "listarCategorias" method = "post">
+                            <h3>Categoria: </h3>
+                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Salgado'"/>
+                            <input type = "submit" value = "Submit"/>
+                        </form>
+                    </div>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
 
@@ -72,5 +79,27 @@
     .apresentacao{
         color : rgb(172, 73, 73);
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .container .box {
+        margin:50px;
+        display:table;
+        padding: 10px;
+        
+    }
+    .container .box .box-row {
+        display:table-row;
+    }
+    .container .box .box-cell {
+        display:table-cell;
+        width: 25%;
+        padding:10px;
+        border-radius: 15px 50px 30px;
+        background:rgb(143, 190, 204);
+    }
+    form { margin: 0 auto; }
+
+    input{
+        align-items: right;
     }
 </style>
