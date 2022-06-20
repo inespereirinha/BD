@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS vendas;
 DROP TABLE IF EXISTS Evento_reposicao;
 DROP TABLE IF EXISTS Responsavel_por;
 DROP TABLE IF EXISTS Retalhista;
@@ -120,7 +121,7 @@ CREATE TABLE Evento_reposicao(
     nro INTEGER,
     num_serie INTEGER,
     fabricante VARCHAR(255),
-    instante INTEGER,
+    instante TIMESTAMP, /* DATE? */
     unidades INTEGER,
     tin VARCHAR(255),
     PRIMARY KEY (ean, nro, num_serie, fabricante, instante),
@@ -129,10 +130,17 @@ CREATE TABLE Evento_reposicao(
 );
 
 /*VIEW*/
+/* YAYYY TEMOS TABELA */
 CREATE VIEW vendas (ean, cat, ano, trimestre, dia_mes, dia_semana, distrito, concelho, unidades) AS 
-SELECT R.ean, C.nome AS cat, EXTRACT(YEAR FROM TIMESTAMP Evento_reposicao.instante) AS ano, EXTRACT(QUARTER FROM TIMESTAMP Evento_reposicao.instante) AS trimestre,
-     EXTRACT(DAY FROM TIMESTAMP Evento_reposicao.instante) AS dia_mes, EXTRACT(DOW FROM TIMESTAMP Evento_reposicao.instante) AS dia_semana, P.distrito, P.concelho, R.unidades
-FROM Evento_reposicao R JOIN Tem_categoria C
-            JOIN Instalada_em JOIN Ponto_de_retalho P
+SELECT R.ean, C.nome AS cat, EXTRACT(YEAR FROM R.instante) AS ano, EXTRACT(QUARTER FROM R.instante) AS trimestre,
+     EXTRACT(DAY FROM R.instante) AS dia_mes, EXTRACT(DOW FROM R.instante) AS dia_semana, P.distrito, P.concelho, R.unidades
+FROM Evento_reposicao R NATURAL JOIN Tem_categoria C
+            NATURAL JOIN Instalada_em NATURAL JOIN Ponto_de_retalho P
+WHERE R.unidades > 0;
 
-DROP VIEW vendas
+
+/*-------*/
+
+SELECT * FROM vendas;
+SELECT EXTRACT(YEAR FROM R.instante)
+	FROM Evento_reposicao R;
