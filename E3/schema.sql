@@ -1,3 +1,18 @@
+DROP TABLE Evento_reposicao;
+DROP TABLE Responsavel_por;
+DROP TABLE Retalhista;
+DROP TABLE Planograma;
+DROP TABLE Prateleira;
+DROP TABLE Instalada_em;
+DROP TABLE Ponto_de_retalho;
+DROP TABLE IVM;
+DROP TABLE Tem_categoria;
+DROP TABLE Produto;
+DROP TABLE Tem_outra;
+DROP TABLE Super_categoria;
+DROP TABLE Categoria_simples;
+DROP TABLE Categoria;
+
 CREATE TABLE Categoria(
     nome VARCHAR(255),
     PRIMARY KEY(nome)
@@ -121,6 +136,10 @@ Vendas (ean, cat, ano, trimestre, dia_mes, dia_semana, distrito, concelho, unida
 -> ano, trimestre, mes e dia_semana: atributos derivados do atributo instante
 
 CREATE VIEW vendas AS 
-SELECT ean, nome AS cat, distrito, concelho, unidades
-FROM Evento_reposicao JOIN Categoria JOIN Instalada_em JOIN Ponto_de_retalho
-WHERE 
+SELECT ean, nome AS cat, ano, trimestre, dia_mes, dia_semana, distrito, concelho, unidades
+FROM Evento_reposicao JOIN Categoria 
+                    JOIN Instalada_em JOIN Ponto_de_retalho 
+WHERE trimestre= 
+
+
+DROP VIEW vendas

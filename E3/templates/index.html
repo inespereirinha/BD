@@ -1,27 +1,76 @@
-<doctype html>
-<title>List accounts - Flask</title>
-<body style="padding:20px">
-  {% if cursor %}
-    <table border="2px">
-      <thead>
-        <tr>
-          <th>account_number</th>
-          <th>branch_name</th>
-          <th>balance</th>
-        </tr>
-      </thead>
-      <tbody>      
-        {% for record in cursor %}
-          <tr>
-            <td>{{ record[0] }}</td>
-            <td>{{ record[1] }}</td>
-            <td>{{ record[2] }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p> Error: failed to retreive data from database!</p>
-  {% endif %}
-</body>
-</doctype>
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <head>
+        <title> Base de Dados </title>
+    </head>
+    <body>
+        <h1 class="apresentacao">Base de Dados -- 3ª entrega</h1>
+        <div>
+            <h2>a) Inserir e remover categorias e sub-categorias</h2>
+            
+            <form action = "inserirCategoria" method = "get" style=" float: left; margin-left: 100px;">
+                <h3>Inserir Categoria: </h3>
+                <input type = "text" name = "ins_cat" placeholder="Nome Categoria">
+                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
+            </form>
+            <form action = "removerCategoria" method = "get" style=" float: left; margin-left: 100px;">
+                <h3>Remover Categoria: </h3>
+                <input type = "text" name = "rem_cat" placeholder="Nome Categoria"> 
+                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px; "/>
+            </form>
+        </div>
+        <div style=" display:inline-block">
+            <h2 style="margin:25px;">b) Inserir e remover um retalhista, com todos os seus produtos, garantindo que esta operação seja
+                atómica</h2>
+            
+            <form action = "inserirRetalhista" method = "get" style=" float: left; margin-left: 100px;">
+                <h3>Inserir Retalhista:</h3>
+                <input type = "text" name = "ins_retalhista_tin" placeholder="TIN">
+                <input type = "text" name = "ins_retalhista_nome" placeholder="NOME">
+                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
+            </form>
+            <form action = "removerCategoria" method = "get" style=" float: left; margin-left: 100px;">
+                <h3>Remover Retalhista: </h3>
+                <input type = "text" name = "rem_retalhista_tin" placeholder="TIN">
+                <input type = "text" name = "rem_retalhista_nome" placeholder="NOME">
+                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
+            </form>
+        </div>
+        <div style=" display:inline-block">
+            <h2 style="margin:25px;">c) Listar todos os eventos de reposição de uma IVM, apresentando o número de unidades repostas por
+                categoria de produto;</h2>
+            <form action = "test.cgi" method = "get" style=" float: left; margin-left: 100px;">
+                <h3>IVM (num_serie): </h3>
+                <input type = "text" name = "ivm_num_serie" placeholder="Numero de Série IVM">
+                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px; "/>
+            </form>
+        </div>
+        <div style="display:inline-block">
+            <h2 style="margin:25px;">d) Listar todas as sub-categorias de uma super-categoria, a todos os níveis de profundidade.</h2>
+            <form action = "test.cgi" method = "get" style=" float: left; margin-left: 100px;">
+                <h3>Categoria: </h3>
+                <input type = "text" name = "nome_categoria" placeholder="Nome Categoria">
+                <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px; "/>
+            </form>
+        </div>
+    </body>
+</html>
+
+
+<style>
+    body {
+        background: rgb(238, 238, 238);
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        left: 0;
+        right: 0;
+        background-repeat: no-repeat;
+    }
+
+    .apresentacao{
+        color : rgb(172, 73, 73);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+</style>

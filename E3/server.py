@@ -67,13 +67,13 @@ def update_balance():
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     # Esta versão é vuneravel a SQL injection
-    query = f'''UPDATE account SET balance={request.form["balance"]} WHERE account_number = '{request.form["account_number"]}';'''
-    cursor.execute(query)
+    query = f'''UPDATE account SET balance=%s WHERE account_number = %s;'''
+    data = (request.form["balance"], request.form["account_number"])
+    cursor.execute(query, data)
     return query
   except Exception as e:
     return str(e) 
   finally:
-    dbConn.commit()
     cursor.close()
     dbConn.close()
 
