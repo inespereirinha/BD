@@ -56,8 +56,9 @@ CREATE TABLE Ponto_de_retalho(
 CREATE TABLE Instalada_em(
     num_serie INTEGER,
     fabricante VARCHAR(255),
-    localidade VARCHAR(255),
+    local VARCHAR(255),
     FOREIGN KEY(num_serie, fabricante) REFERENCES IVM(num_serie, fabricante)
+    FOREIGN KEY(local) REFERENCES Ponto_de_retalho
 );
 
 CREATE TABLE Prateleira(
@@ -112,3 +113,14 @@ CREATE TABLE Evento_reposicao(
     FOREIGN KEY (tin) REFERENCES Retalhista(tin)
 );
 
+
+Vendas (ean, cat, ano, trimestre, dia_mes, dia_semana, distrito, concelho, unidades)
+-> unidades: corresponde ao atributo com o mesmo nome da relação evento_reposicao
+-> ean e cat: correspondem às chaves primárias das relações produto e categoria, respectivamente
+-> distrito e concelho: correspondem aos atributos com o mesmo nome de ponto_de_retalho
+-> ano, trimestre, mes e dia_semana: atributos derivados do atributo instante
+
+CREATE VIEW vendas AS 
+SELECT ean, nome AS cat, distrito, concelho, unidades
+FROM Evento_reposicao JOIN Categoria JOIN Instalada_em JOIN Ponto_de_retalho
+WHERE 
