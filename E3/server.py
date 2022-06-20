@@ -22,7 +22,7 @@ queries = {
   "INSERT INTO Retalhista VALUES (%s, %s)",
   "DELETE FROM Retalhista where tin = %s",
   "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto ORDER BY instante GROUP BY cat;",
-  "SELECT super-categoria FROM Tem_outra where categoria = %s"
+  "SELECT categoria FROM Tem_outra where super-categoria = %s"
 }
 
 ## Runs the function once the root page is requested.
@@ -106,24 +106,15 @@ def remover_retalhista():
     dbConn.close()
 
 @app.route('/listarEventos', methods=["POST"])
-def listarEventos():
+def listar_eventos():
   dbConn=None
   cursor=None
-  try:
-    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
-    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    data = (request.form["categoria_nome"])
-    cursor.execute(queries[0], data)
-    return render_template("success.html", cursor=cursor)
-  except Exception as e:
-    return str(e) 
-  finally:
-    cursor.close()
-    dbConn.close()
 
 
 @app.route('/listarCategorias', methods=["POST"])
-
+def listar_categorias():
+  dbConn=None
+  cursor=None
 
 @app.route('/update', methods=["POST"])
 def update_balance():
