@@ -1,4 +1,3 @@
-DROP VIEW IF EXISTS vendas;
 DROP TABLE IF EXISTS Evento_reposicao;
 DROP TABLE IF EXISTS Responsavel_por;
 DROP TABLE IF EXISTS Retalhista;
@@ -58,8 +57,7 @@ CREATE TABLE Tem_categoria(
 CREATE TABLE IVM(
     num_serie VARCHAR(255),
     fabricante VARCHAR(255),
-    PRIMARY KEY(num_serie, fabricante),
-    CHECK(num_serie > 0)
+    PRIMARY KEY(num_serie, fabricante)
 );
 
 CREATE TABLE Ponto_de_retalho(
@@ -92,7 +90,7 @@ CREATE TABLE Planograma(
     nro INTEGER,
     num_serie VARCHAR(255),
     fabricante VARCHAR(255),
-    faces INTEGER, /* ADDED: */ 
+    faces INTEGER,
     unidades INTEGER,
     loc VARCHAR(255),
     PRIMARY KEY(ean, nro, num_serie, fabricante),
@@ -110,7 +108,7 @@ CREATE TABLE Responsavel_por(
     tin VARCHAR(255),
     num_serie VARCHAR(255),
     fabricante VARCHAR(255), 
-    PRIMARY KEY (9num_serie, fabricante),
+    PRIMARY KEY (num_serie, fabricante),
     FOREIGN KEY(num_serie, fabricante) REFERENCES IVM(num_serie, fabricante),
     FOREIGN KEY(tin) REFERENCES Retalhista(tin),
     FOREIGN KEY(nome_cat) REFERENCES Categoria(nome)
@@ -121,37 +119,10 @@ CREATE TABLE Evento_reposicao(
     nro INTEGER,
     num_serie VARCHAR(255),
     fabricante VARCHAR(255),
-    instante TIMESTAMP, /* DATE? */
+    instante TIMESTAMP,
     unidades INTEGER,
     tin VARCHAR(255),
     PRIMARY KEY (ean, nro, num_serie, fabricante, instante),
     FOREIGN KEY (ean, nro, num_serie, fabricante) REFERENCES Planograma(ean, nro, num_serie, fabricante),
     FOREIGN KEY (tin) REFERENCES Retalhista(tin)
 );
-
-/*VIEW*/
-
-CREATE VIEW vendas (ean, cat, ano, trimestre, mes, dia_mes, dia_semana, distrito, concelho, unidades) AS 
-SELECT R.ean, C.nome AS cat, 
-	 EXTRACT(YEAR FROM R.instante) AS ano, EXTRACT(QUARTER FROM R.instante) AS trimestre,
-	 EXTRACT(MONTH FROM R.instante) AS mes, EXTRACT(DAY FROM R.instante) AS dia_mes, 
-	 EXTRACT(DOW FROM R.instante) AS dia_semana,
-	 P.distrito, P.concelho, R.unidades
-    FROM Evento_reposicao R JOIN Tem_categoria C ON  C.ean = R.ean
-        JOIN Instalada_em I ON R.num_serie = I.num_serie JOIN Ponto_de_retalho P ON I.loc = P.nome;
-
-/* SQL */
-
-SELECT nome FROM retalhista WHERE tin IN(
-	SELECT R.tin
-	FROM Retalhista E JOIN Responsavel_por R ON R.tin = E.tin
-	GROUP BY R.tin
-	HAVING COUNT(*) >= ALL (
-		SELECT COUNT(*)
-		FROM Responsavel_por T
-		GROUP BY tin)
-);
-
-
-
-/* Quais os produtos (ean) que nunca foram repostos? */

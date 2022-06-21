@@ -23,7 +23,7 @@ insert into Produto values ('9781250111173', 'Leite Vigor', 'Lacticinios');
 insert into Produto values ('9781786495259', 'Bacalhau', 'Peixe');
 insert into Produto values ('9781619634466', 'Iogurte Nestle', 'Iogurte');
 insert into Produto values ('9780439023481', 'Queijo da Ilha', 'Queijo');
-insert into Produto values ('9781786495259', 'Leite Matinal', 'Lacticinios');
+insert into Produto values ('9781786235459', 'Leite Matinal', 'Lacticinios');
 
 insert into Tem_categoria values ('9780525555230', 'Peixe');
 insert into Tem_categoria values ('9780312330873', 'Carne');
@@ -31,7 +31,6 @@ insert into Tem_categoria values ('9781471184307', 'Carne');
 insert into Tem_categoria values ('9780571334650', 'Iogurte');
 insert into Tem_categoria values ('9781501139239', 'Queijo');
 insert into Tem_categoria values ('9781250111173', 'Lacticinios');
-insert into Tem_categoria values ('9781786495259', 'Peixe');
 insert into Tem_categoria values ('9781619634466', 'Iogurte');
 insert into Tem_categoria values ('9780439023481', 'Queijo');
 insert into Tem_categoria values ('9781786495259', 'Lacticinios');
@@ -72,7 +71,7 @@ insert into Planograma values ('9781250111173', 1, '348164', 'Fabricante 3', 1, 
 insert into Planograma values ('9781786495259', 2, '348164', 'Fabricante 3', 3, 16, 'LOC6');
 insert into Planograma values ('9781786495259', 1, '209265', 'Fabricante 2', 2, 4, 'LOC7');
 insert into Planograma values ('9780439023481', 2, '209265', 'Fabricante 2', 4, 11, 'LOC8');
-insert into Planograma values ('9781786892720', 1, '155310', 'Fabricante 1', 1, 9, 'LOC9');
+insert into Planograma values ('9781250111173', 1, '155310', 'Fabricante 1', 1, 9, 'LOC9');
 insert into Planograma values ('9780571334650', 2, '155310', 'Fabricante 1', 2, 2, 'LOC8');
 
 insert into Retalhista values ('4098484', 'Butcher Inc.');
@@ -86,20 +85,21 @@ insert into Retalhista values ('0129249', 'Sweet Drop');
 /*insert into Responsavel_por values ('Carne', '4098484', '155310', 'Fabricante 1');
 insert into Responsavel_por values ('Queijo', '3261780', '209265', 'Fabricante 2');
 insert into Responsavel_por values ('Peixe', '2386323', '348164', 'Fabricante 3');*/
-insert into Responsavel_por values ('Carne', '9860242', '432944', 'Fabricante 4');
+/*insert into Responsavel_por values ('Carne', '9860242', '432944', 'Fabricante 4');*/
 /*insert into Responsavel_por values ('Iogurte', '1553610', '572734', 'Fabricante 5');*/
 insert into Responsavel_por values ('Peixe', '0129249', '348164', 'Fabricante 3');
 insert into Responsavel_por values ('Carne', '0129249', '155310', 'Fabricante 1');
 insert into Responsavel_por values ('Queijo', '0129249', '209265', 'Fabricante 2');
 insert into Responsavel_por values ('Iogurte', '0129249', '572734', 'Fabricante 5');
+insert into Responsavel_por values ('Lacticinios', '0129249', '432944', 'Fabricante 4');
 
-insert into Evento_reposicao values ('9780525555230', 1, '572734', 'Fabricante 5', '2022-01-12 13:30:15', 10, '1553610');
-insert into Evento_reposicao values ('9780312330873', 2, '572734', 'Fabricante 5', '2022-02-12 13:30:15', 8, '1553610');
-insert into Evento_reposicao values ('9781619634466', 1, '432944', 'Fabricante 4', '2022-03-12 13:30:15', 5, '9860242');
-insert into Evento_reposicao values ('9781471184307', 2, '432944', 'Fabricante 4', '2022-04-12 13:30:15', 12, '9860242');
-insert into Evento_reposicao values ('9781250111173', 1, '348164', 'Fabricante 3', '2022-05-12 13:30:15', 7, '2386323');
-insert into Evento_reposicao values ('9781786495259', 2, '348164', 'Fabricante 3', '2022-06-12 13:30:15', 16, '2386323');
-insert into Evento_reposicao values ('9781786495259', 1, '209265', 'Fabricante 2', '2022-07-12 13:30:15', 4, '3261780');
-insert into Evento_reposicao values ('9780439023481', 2, '209265', 'Fabricante 2', '2022-08-12 13:30:15', 11, '3261780');
-insert into Evento_reposicao values ('9781786892720', 1, '155310', 'Fabricante 1', '2022-09-12 13:30:15', 9, '4098484');
-/* insert into Evento_reposicao values ('9780571334650', 2, '155310', 'Fabricante 1', '2022-10-12 13:30:15', 2, '4098484'); */
+
+insert into Evento_reposicao values ('9780525555230', 1, '572734', 'Fabricante 5', '2018-01-12 13:30:15', 10, '1553610');
+insert into Evento_reposicao values ('9780312330873', 2, '572734', 'Fabricante 5', '2018-02-12 13:30:15', 8, '1553610');
+insert into Evento_reposicao values ('9781619634466', 1, '432944', 'Fabricante 4', '2019-03-12 13:30:15', 5, '9860242');
+insert into Evento_reposicao values ('9781471184307', 2, '432944', 'Fabricante 4', '2019-04-12 13:30:15', 12, '9860242');
+insert into Evento_reposicao values ('9781250111173', 1, '348164', 'Fabricante 3', '2019-05-12 13:30:15', 7, '2386323');
+insert into Evento_reposicao values ('9781786495259', 2, '348164', 'Fabricante 3', '2020-06-12 13:30:15', 16, '2386323');
+insert into Evento_reposicao values ('9781786495259', 1, '209265', 'Fabricante 2', '2020-07-12 13:30:15', 4, '3261780');
+insert into Evento_reposicao values ('9780439023481', 2, '209265', 'Fabricante 2', '2021-08-12 13:30:15', 11, '3261780');
+insert into Evento_reposicao values ('9780571334650', 2, '155310', 'Fabricante 1', '2022-10-12 13:30:15', 2, '4098484');

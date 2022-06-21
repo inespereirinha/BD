@@ -18,24 +18,31 @@ DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DA
 
 queries = [
   "INSERT INTO Categoria VALUES (%s); \
-   INSERT INTO Categoria_simples VALUES (%s);",
+  INSERT INTO Categoria_simples VALUES (%s);",
 
   "DELETE FROM Categoria_simples WHERE nome = %s; \
-   INSERT INTO Super_categoria VALUES (%s); \
-   INSERT INTO Categoria VALUES (%s); \
-   INSERT INTO Categoria_simples VALUES (%s); \
-   INSERT INTO Tem_outra VALUES (%s, %s);",
+  INSERT INTO Super_categoria VALUES (%s); \
+  INSERT INTO Categoria VALUES (%s); \
+  INSERT INTO Categoria_simples VALUES (%s); \
+  INSERT INTO Tem_outra VALUES (%s, %s);",
 
   "DELETE FROM Evento_reposicao WHERE ean IN (SELECT ean FROM Produto WHERE cat = %s); \
-   DELETE FROM Responsavel_por WHERE nome_cat = %s; \
-   DELETE FROM Planograma WHERE ean IN (SELECT ean FROM Produto WHERE cat = %s); \
-   DELETE FROM Prateleira WHERE nome = %s; \
-   DELETE FROM Tem_categoria WHERE nome = %s; \
-   DELETE FROM Tem_outra WHERE super_categoria = %s OR categoria = %s; \
-   DELETE FROM Super_categoria WHERE nome = %s; \
-   DELETE FROM Categoria_simples WHERE nome = %s;",
+  DELETE FROM Responsavel_por WHERE nome_cat = %s; \
+  DELETE FROM Planograma WHERE ean IN (SELECT ean FROM Produto WHERE cat = %s); \
+  DELETE FROM Prateleira WHERE nome = %s; \
+  DELETE FROM Tem_categoria WHERE nome = %s; \
+  DELETE FROM Tem_outra WHERE super_categoria = %s OR categoria = %s; \
+  DELETE FROM Super_categoria WHERE nome = %s; \
+  DELETE FROM Categoria_simples WHERE nome = %s; \
+  IF EXISTS (SELECT * FROM tem_outra WHERE super_categoria = %s) \
+  BEGIN \
+    DELETE FROM Super_categoria WHERE super_categoria = %s; \
+    INSERT INTO Categoria_simples VALUES(%s); \
+  END \
+  DELETE FROM Categoria WHERE nome = %s;",
 
-  "INSERT INTO Retalhista VALUES (%s, %s)",
+
+  "INSERT INTO Retalhista VALUES (%s, %s);",
   
   "DELETE FROM Responsavel_por WHERE tin = %s; \
    DELETE FROM Evento_reposicao WHERE tin = %s; \
@@ -43,7 +50,7 @@ queries = [
 
   "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %s ORDER BY instante GROUP BY cat;",
 
-  "SELECT categoria FROM Tem_outra WHERE super_categoria = %s"
+  "SELECT categoria FROM Tem_outra WHERE super_categoria = %s;"
 ]
 
 
@@ -64,30 +71,33 @@ def init():
     dbConn.close()
     
 
-@app.route('/inserirCategoria', methods=["POST"])
-def inserir_categoria():
+@app.route('/inserirCategoriaSimples', methods=["POST"])
+def inserir_categoria_simples():
   dbConn=None
   cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[0], (request.form["categoria_nome"],))
+    print(request.form["categoria_nome"])
+    cursor.execute(queries[0], (request.form["categoria_nome"],request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return render_template("insuccess.html?request.form['categoria_nome']", cursor=None)
+    return str(e)
   finally:
     cursor.close()
     dbConn.commit()
     dbConn.close()
 
-@app.route('/inserirSubCategoria', methods=["POST"])
-def inserir_categoria():
+@app.route('/inserirCategoriaRelacoes', methods=["POST"])
+def inserir_categoria_relacoes():
   dbConn=None
   cursor=None
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[1], (request.form["categoria_super"],request.form["categoria_super"],request.form["categoria_sub"],request.form["categoria_sub"],request.form["categoria_super"],request.form["categoria_sub"],))
+    sub_cat = request.form["categoria_sub"]
+    super_cat = request.form["categoria_super"]
+    cursor.execute(queries[1], (super_cat, super_cat, sub_cat, sub_cat, super_cat, sub_cat,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -103,7 +113,8 @@ def remover_categoria():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[2], (request.form["categoria_nome"],))
+    cat = request.form["categoria_nome"]
+    cursor.execute(queries[2], (cat, cat, cat, cat, cat, cat, cat, cat,cat,cat, cat, cat, cat))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -120,12 +131,11 @@ def inserir_retalhista():
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     cursor.execute(queries[3], (request.form["retalhista_tin"], request.form["retalhista_nome"],))
-    return render_template("success.html", cursor=cursor)
+    return render_template("retalhista.html", params=request.args)
   except Exception as e:
     return str(e) 
   finally:
     cursor.close()
-    dbConn.commit()
     dbConn.close()
 
 @app.route('/removerRetalhista', methods=["POST"])
@@ -135,7 +145,8 @@ def remover_retalhista():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[4], (request.form["retalhista_tin"], request.form["retalhista_tin"], request.form["retalhista_tin"],))
+    tin = request.form["retalhista_tin"]
+    cursor.execute(queries[4], (tin, tin, tin,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -176,6 +187,6 @@ def listar_categorias():
     dbConn.close()
 
 
-app.run(host = '0.0.0.0', port=5001)
+app.run(host = '0.0.0.0', port=5000)
 
 
