@@ -22,19 +22,27 @@ queries = [
 
   "DELETE FROM Categoria_simples WHERE nome = %s; \
    INSERT INTO Super_categoria VALUES (%s); \
-   INSERT INTO Super_categoria VALUES (%s); \
-   INSERT INTO Super_categoria VALUES (%s); \
+   INSERT INTO Categoria VALUES (%s); \
+   INSERT INTO Categoria_simples VALUES (%s); \
    INSERT INTO Tem_outra VALUES (%s, %s);",
 
-  "DELETE FROM Categoria WHERE nome = %s;",
+  "DELETE FROM Evento_reposicao WHERE ean IN (SELECT ean FROM Produto WHERE cat = %s); \
+   DELETE FROM Responsavel_por WHERE nome_cat = %s; \
+   DELETE FROM Planograma WHERE ean IN (SELECT ean FROM Produto WHERE cat = %s); \
+   DELETE FROM Prateleira WHERE nome = %s; \
+   DELETE FROM Tem_categoria WHERE nome = %s; \
+   DELETE FROM Tem_outra WHERE super_categoria = %s OR categoria = %s; \
+   DELETE FROM Super_categoria WHERE nome = %s; \
+   DELETE FROM Categoria_simples WHERE nome = %s;",
 
   "INSERT INTO Retalhista VALUES (%s, %s)",
-  // 
+  
   "DELETE FROM Responsavel_por WHERE tin = %s; \
    DELETE FROM Evento_reposicao WHERE tin = %s; \
    DELETE FROM Retalhista WHERE tin = %s",
 
   "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %s ORDER BY instante GROUP BY cat;",
+
   "SELECT categoria FROM Tem_outra WHERE super_categoria = %s"
 ]
 
@@ -66,7 +74,7 @@ def inserir_categoria():
     cursor.execute(queries[0], (request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("insuccess.html?request.form['categoria_nome']", cursor=None)
   finally:
     cursor.close()
     dbConn.commit()
@@ -79,7 +87,7 @@ def inserir_categoria():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[1], (request.form["categoria_super"],request.form["categoria_super"],request.form["categoria_sub"],))
+    cursor.execute(queries[1], (request.form["categoria_super"],request.form["categoria_super"],request.form["categoria_sub"],request.form["categoria_sub"],request.form["categoria_super"],request.form["categoria_sub"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 

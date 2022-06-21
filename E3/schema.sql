@@ -110,7 +110,7 @@ CREATE TABLE Responsavel_por(
     tin VARCHAR(255),
     num_serie VARCHAR(255),
     fabricante VARCHAR(255), 
-    PRIMARY KEY (num_serie, fabricante),
+    PRIMARY KEY (9num_serie, fabricante),
     FOREIGN KEY(num_serie, fabricante) REFERENCES IVM(num_serie, fabricante),
     FOREIGN KEY(tin) REFERENCES Retalhista(tin),
     FOREIGN KEY(nome_cat) REFERENCES Categoria(nome)
@@ -142,6 +142,16 @@ SELECT R.ean, C.nome AS cat,
 
 /* SQL */
 
+SELECT nome FROM retalhista WHERE tin IN(
+	SELECT R.tin
+	FROM Retalhista E JOIN Responsavel_por R ON R.tin = E.tin
+	GROUP BY R.tin
+	HAVING COUNT(*) >= ALL (
+		SELECT COUNT(*)
+		FROM Responsavel_por T
+		GROUP BY tin)
+);
 
 
 
+/* Quais os produtos (ean) que nunca foram repostos? */
