@@ -14,13 +14,19 @@
             
                         <form action = "inserirCategoria" method = "post">
                             <h3>Inserir Categoria: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Salgado'">
-                            <input type = "submit" value = "Submit" style="align-items: right; margin-top: 10px;"/>
+                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'">
+                            <input class="submit" type = "submit" value = "Let's Go!"/>
+                        </form>
+                        <form action = "inserirSubCategoria" method = "post">
+                            <h3>Inserir Sub-Categoria: </h3>
+                            <input type = "text" name = "categoria_super" placeholder="Nome, ex.: 'Carne'">
+                            <input type = "text" name = "categoria_sub" placeholder="Nome, ex.: 'Picanha'">
+							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                         <form action = "removerCategoria" method = "post">
                             <h3>Remover Categoria: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Salgado'"> 
-                            <input type = "submit" value = "Submit"/>
+                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'"> 
+							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
 					</div>
 
@@ -32,13 +38,13 @@
                             <h3>Inserir Retalhista:</h3>
                             <input type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'"/>
                             <input type = "text" name = "retalhista_nome" placeholder="Nome, ex.: 'Butcher Inc.'"/>
-                            <input type = "submit" value = "Submit"/>
+							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                         <form action = "removerRetalhista" method = "post">
                             <h3>Remover Retalhista: </h3>
                             <input type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'">
                             <input type = "text" name = "retalhista_nome" placeholder="Nome, ex.: 'Butcher Inc.'">
-                            <input type = "submit" value = "Submit"/>
+							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                     </div>
                     <div class="box-cell">
@@ -46,16 +52,16 @@
                             categoria de produto;</h2>
                         <form action = "listarEventos" method = "post">
                             <h3>IVM (num_serie): </h3>
-                            <input type = "number" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310'"/>
-                            <input type = "submit" value = "Submit"/>
+                            <input type = "text" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310'"/>
+							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                     </div>
                     <div class="box-cell">
                         <h2>d) Listar todas as sub-categorias de uma super-categoria, a todos os níveis de profundidade.</h2>
                         <form action = "listarCategorias" method = "post">
                             <h3>Categoria: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Salgado'"/>
-                            <input type = "submit" value = "Submit"/>
+                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'"/>
+							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                     </div>
 				</div>
@@ -67,39 +73,63 @@
 
 <style>
     body {
-        background: rgb(238, 238, 238);
+        background: rgb(245, 245, 245);
         height: 100%;
         width: 100%;
         overflow-x: hidden;
         left: 0;
         right: 0;
+      
+        font-family: "Bahnschrift Light";
         background-repeat: no-repeat;
+        text-align:center;
+    }
+    
+    div{
+    	font-size: 12px;
     }
 
     .apresentacao{
         color : rgb(172, 73, 73);
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
-    .container .box {
-        margin:50px;
+    .container, .box {
+    	margin:50px;
         display:table;
-        padding: 10px;
-        
+        padding: 10px;        
     }
-    .container .box .box-row {
+    
+    .container, .box, .box-row {
         display:table-row;
     }
+    
     .container .box .box-cell {
         display:table-cell;
         width: 25%;
         padding:10px;
         border-radius: 15px 50px 30px;
-        background:rgb(143, 190, 204);
+        background:rgb(187, 202, 207);
     }
-    form { margin: 0 auto; }
 
     input{
+    	border-radius: 5px;
+        height : 25px;
+    	margin : 0 auto;
         align-items: right;
+        width : 80%;
+        box-sizing: content-box;
+        font-family: "Bahnschrift Light";
+    }
+    
+    .submit{
+    	align-items: right; 
+        margin-top: 10px;
+    	width : 50%;
+        font-family: "Bahnschrift SemiBold";
+        background:rgb(143, 190, 204);
+    }
+    
+    h2, h3 {
+    	text-align: left;
     }
 </style>

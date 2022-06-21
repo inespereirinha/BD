@@ -56,7 +56,7 @@ CREATE TABLE Tem_categoria(
 );
 
 CREATE TABLE IVM(
-    num_serie INTEGER,
+    num_serie VARCHAR(255),
     fabricante VARCHAR(255),
     PRIMARY KEY(num_serie, fabricante),
     CHECK(num_serie > 0)
@@ -70,16 +70,16 @@ CREATE TABLE Ponto_de_retalho(
 );
 
 CREATE TABLE Instalada_em(
-    num_serie INTEGER,
+    num_serie VARCHAR(255),
     fabricante VARCHAR(255),
-    local VARCHAR(255),
+    loc VARCHAR(255),
     FOREIGN KEY(num_serie, fabricante) REFERENCES IVM(num_serie, fabricante),
-    FOREIGN KEY(local) REFERENCES Ponto_de_retalho
+    FOREIGN KEY(loc) REFERENCES Ponto_de_retalho
 );
 
 CREATE TABLE Prateleira(
     nro INTEGER,
-    num_serie INTEGER,
+    num_serie VARCHAR(255),
     fabricante VARCHAR(255),
     altura FLOAT,
     nome VARCHAR(255),
@@ -90,7 +90,7 @@ CREATE TABLE Prateleira(
 CREATE TABLE Planograma(
     ean CHAR(13),
     nro INTEGER,
-    num_serie INTEGER,
+    num_serie VARCHAR(255),
     fabricante VARCHAR(255),
     faces INTEGER, /* ADDED: */ 
     unidades INTEGER,
@@ -108,7 +108,7 @@ CREATE TABLE Retalhista(
 CREATE TABLE Responsavel_por(
     nome_cat VARCHAR(255),
     tin VARCHAR(255),
-    num_serie INTEGER,
+    num_serie VARCHAR(255),
     fabricante VARCHAR(255), 
     PRIMARY KEY (num_serie, fabricante),
     FOREIGN KEY(num_serie, fabricante) REFERENCES IVM(num_serie, fabricante),
@@ -119,7 +119,7 @@ CREATE TABLE Responsavel_por(
 CREATE TABLE Evento_reposicao(
     ean CHAR(13),
     nro INTEGER,
-    num_serie INTEGER,
+    num_serie VARCHAR(255),
     fabricante VARCHAR(255),
     instante TIMESTAMP, /* DATE? */
     unidades INTEGER,
@@ -130,17 +130,18 @@ CREATE TABLE Evento_reposicao(
 );
 
 /*VIEW*/
-/* YAYYY TEMOS TABELA */
-CREATE VIEW vendas (ean, cat, ano, trimestre, dia_mes, dia_semana, distrito, concelho, unidades) AS 
-SELECT R.ean, C.nome AS cat, EXTRACT(YEAR FROM R.instante) AS ano, EXTRACT(QUARTER FROM R.instante) AS trimestre,
-     EXTRACT(DAY FROM R.instante) AS dia_mes, EXTRACT(DOW FROM R.instante) AS dia_semana, P.distrito, P.concelho, R.unidades
-FROM Evento_reposicao R NATURAL JOIN Tem_categoria C
-            NATURAL JOIN Instalada_em NATURAL JOIN Ponto_de_retalho P
-WHERE R.unidades > 0;
+
+CREATE VIEW vendas (ean, cat, ano, trimestre, mes, dia_mes, dia_semana, distrito, concelho, unidades) AS 
+SELECT R.ean, C.nome AS cat, 
+	 EXTRACT(YEAR FROM R.instante) AS ano, EXTRACT(QUARTER FROM R.instante) AS trimestre,
+	 EXTRACT(MONTH FROM R.instante) AS mes, EXTRACT(DAY FROM R.instante) AS dia_mes, 
+	 EXTRACT(DOW FROM R.instante) AS dia_semana,
+	 P.distrito, P.concelho, R.unidades
+    FROM Evento_reposicao R JOIN Tem_categoria C ON  C.ean = R.ean
+        JOIN Instalada_em I ON R.num_serie = I.num_serie JOIN Ponto_de_retalho P ON I.loc = P.nome;
+
+/* SQL */
 
 
-/*-------*/
 
-SELECT * FROM vendas;
-SELECT EXTRACT(YEAR FROM R.instante)
-	FROM Evento_reposicao R;
+

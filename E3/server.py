@@ -17,13 +17,24 @@ DB_PASSWORD="mutz6626"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
 
 queries = [
-  "INSERT INTO Categoria VALUES (%s);",
+  "INSERT INTO Categoria VALUES (%s); \
+   INSERT INTO Categoria_simples VALUES (%s);",
+
+  "DELETE FROM Categoria_simples WHERE nome = %s; \
+   INSERT INTO Super_categoria VALUES (%s); \
+   INSERT INTO Super_categoria VALUES (%s); \
+   INSERT INTO Super_categoria VALUES (%s); \
+   INSERT INTO Tem_outra VALUES (%s, %s);",
+
   "DELETE FROM Categoria WHERE nome = %s;",
+
   "INSERT INTO Retalhista VALUES (%s, %s)",
+  // 
   "DELETE FROM Responsavel_por WHERE tin = %s; \
    DELETE FROM Evento_reposicao WHERE tin = %s; \
    DELETE FROM Retalhista WHERE tin = %s",
-  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %d ORDER BY instante GROUP BY cat;",
+
+  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %s ORDER BY instante GROUP BY cat;",
   "SELECT categoria FROM Tem_outra WHERE super_categoria = %s"
 ]
 
@@ -61,6 +72,22 @@ def inserir_categoria():
     dbConn.commit()
     dbConn.close()
 
+@app.route('/inserirSubCategoria', methods=["POST"])
+def inserir_categoria():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    cursor.execute(queries[1], (request.form["categoria_super"],request.form["categoria_super"],request.form["categoria_sub"],))
+    return render_template("success.html", cursor=cursor)
+  except Exception as e:
+    return str(e) 
+  finally:
+    cursor.close()
+    dbConn.commit()
+    dbConn.close()
+
 @app.route('/removerCategoria', methods=["POST"])
 def remover_categoria():
   dbConn=None
@@ -68,7 +95,7 @@ def remover_categoria():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[1], (request.form["categoria_nome"],))
+    cursor.execute(queries[2], (request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -84,7 +111,7 @@ def inserir_retalhista():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[2], (request.form["retalhista_tin"], request.form["retalhista_nome"],))
+    cursor.execute(queries[3], (request.form["retalhista_tin"], request.form["retalhista_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -100,7 +127,7 @@ def remover_retalhista():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[3], (request.form["retalhista_tin"], request.form["retalhista_tin"], request.form["retalhista_tin"],))
+    cursor.execute(queries[4], (request.form["retalhista_tin"], request.form["retalhista_tin"], request.form["retalhista_tin"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -116,7 +143,7 @@ def listar_eventos():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[4], (request.form["ivm_num_serie"],))
+    cursor.execute(queries[5], (request.form["ivm_num_serie"]),)
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -132,7 +159,7 @@ def listar_categorias():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[5], (request.form["categoria_nome"],))
+    cursor.execute(queries[6], (request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
