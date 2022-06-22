@@ -35,8 +35,8 @@ queries = [
   DELETE FROM Super_categoria WHERE nome = %s; \
   DELETE FROM Categoria_simples WHERE nome = %s; \
   DELETE FROM Categoria WHERE nome = %s; \
-  INSERT INTO Categoria_simples (nome) SELECT nome FROM Super_categoria NATURAL JOIN Tem_outra WHERE Super_categoria.nome != Tem_outra.super_categoria GROUP BY nome; \
-  DELETE FROM Super_categoria WHERE nome IN (SELECT nome FROM Super_categoria NATURAL JOIN Tem_outra WHERE Super_categoria.nome != Tem_outra.super_categoria GROUP BY nome);",
+  INSERT INTO Categoria_simples (nome) SELECT sc.nome FROM Super_categoria sc LEFT JOIN tem_outra toc ON toc.super_categoria = sc.nome WHERE toc.super_categoria IS NULL; \
+  DELETE FROM Super_categoria WHERE nome IN (SELECT sc.nome FROM Super_categoria sc LEFT JOIN tem_outra toc ON toc.super_categoria = sc.nome WHERE toc.super_categoria IS NULL);",
 
   "INSERT INTO Retalhista VALUES (%s, %s);",
   
@@ -83,7 +83,7 @@ def inserir_categoria_simples():
     cursor.execute(queries[0], (request.form["categoria_nome"],request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return render_template("error.html", erro=e)
+    return render_template("error.html", inicioErro="Não foi posível inserir categoria simples '" + request.form["categoria_nome"] + "'!", erro=e)
   finally:
     cursor.close()
     dbConn.commit()
@@ -101,7 +101,7 @@ def inserir_categoria_relacoes():
     cursor.execute(queries[1], (super_cat, super_cat, sub_cat, sub_cat, super_cat, sub_cat,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return render_template("error.html", erro=e) 
+    return render_template("error.html", inicioErro="Não foi possível inserir relações entre categorias '" + request.form["categoria_super"] + "' e '" + request.form["categoria_sub"] + "'!", erro=e) 
   finally:
     cursor.close()
     dbConn.commit()
@@ -118,7 +118,7 @@ def remover_categoria():
     cursor.execute(queries[2], (cat, cat, cat, cat, cat, cat, cat, cat, cat, cat,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return render_template("error.html", erro=e) 
+    return render_template("error.html", inicioErro="Não foi posível remover categoria '" + request.form["categoria_nome"] + "'!", erro=e)
   finally:
     cursor.close()
     dbConn.commit()
@@ -139,7 +139,7 @@ def inserir_retalhista():
     retalhista_nome = request.form["retalhista_nome"]
     return render_template("retalhista.html", retalhista_tin=retalhista_tin, retalhista_nome=retalhista_nome)
   except Exception as e:
-    return render_template("error.html", erro=e) 
+    return render_template("error.html", inicioErro="Não foi posível inserir retalhista '" + request.form["retalhista_tin"] + "'!", erro=e)
   finally:
     cursor.close()
     dbConn.close()
@@ -155,7 +155,7 @@ def remover_retalhista():
     cursor.execute(queries[4], (tin, tin, tin,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return render_template("error.html", erro=e) 
+    return render_template("error.html", inicioErro="Não foi posível remover retalhista '" + request.form["retalhista_tin"] + "'!", erro=e)
   finally:
     cursor.close()
     dbConn.commit()
@@ -171,7 +171,7 @@ def listar_eventos():
     cursor.execute(queries[5], (request.form["ivm_num_serie"],))
     return render_template("successSelectIVM.html", cursor=cursor)
   except Exception as e:
-    return render_template("error.html", erro=e) 
+    return render_template("error.html", inicioErro="Não foi posível listar eventos de ivm '" + request.form["ivm_num_serie"] + "'!", erro=e)
   finally:
     cursor.close()
     dbConn.close()
@@ -187,7 +187,7 @@ def listar_categorias():
     cursor.execute(queries[6], (request.form["categoria_nome"],))
     return render_template("successSelectCategoria.html", cursor=cursor)
   except Exception as e:
-    return render_template("error.html", erro=e) 
+    return render_template("error.html", inicioErro="Não foi posível listar sub categorias para categoria '" + request.form["categoria_nome"] + "'!", erro=e)
   finally:
     cursor.close()
     dbConn.close()

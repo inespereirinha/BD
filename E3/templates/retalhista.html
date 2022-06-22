@@ -9,20 +9,16 @@
         <h1 class="apresentacao">IVMs e retalhistas</h1>
         <div class="container">
 			<div class="box">
-				<div class="box-row">
-					<div class="box-cell">
-                        <h2>Adicionar IVMs e Categorias para retalhista {{ retalhista_nome }}, TIN : {{ retalhista_tin }}.</h2>
-                        <form action = "adicionarResponsabilidades" method = "post">
-                            <h3>Inserir responsabilidades: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Categoria, ex.: 'Carne'"/>
-                            <input type = "text" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310', ex.: 'Carne'"/>
-                            <input type = "text" name = "ivm_fabricante" placeholder="Fabricante, ex.: 'Fabricante 1'"/>
-							<input class="submit_next" name="action" type = "submit" value = "NEXT"/>                      
-                            <input class="submit_cancel" name="action" type = "submit" value = "CANCEL"/>                      		 
-                            <input class="submit_done" name="action" type = "submit" value = "DONE"/>                      
-                        </form>
-                    </div>
-				</div>
+                <h2>Adicionar IVMs e Categorias para retalhista {{ retalhista_nome }}, TIN : {{ retalhista_tin }}.</h2>
+                <form action = "adicionarResponsabilidades" method = "post">
+                    <h3>Inserir responsabilidades: </h3>
+                    <input type = "text" name = "categoria_nome" placeholder="Categoria, ex.: 'Carne'"/>
+                    <input type = "text" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310', ex.: 'Carne'"/>
+                    <input type = "text" name = "ivm_fabricante" placeholder="Fabricante, ex.: 'Fabricante 1'"/>
+                    <input class="submit_next" name="action" type = "submit" value = "NEXT"/>                      
+                    <input class="submit_cancel" name="action" type = "submit" value = "CANCEL"/>                      		 
+                    <input class="submit_done" name="action" type = "submit" value = "DONE"/>                      
+                </form>
 			</div>
 		</div>
     </body>
@@ -49,27 +45,17 @@
     }
 
 	.container{
-    	
-        padding: 50%;
+        padding: 10px;
     	margin: auto;
     	text-align : center;
     }
 
-    .container, .box {
-        margin: auto;
-        display:table;  
-        text-align : center;
-    }
-    
-    .container, .box, .box-row {
-    	width: 50%;
-        display:table-row;
-        margin: auto;
-    }
-    
-    .container .box .box-cell {
-        display:table-cell;
-        width: 100%;
+    .container .box {
+        text-align: center;
+        margin-top:30px;
+        margin-left:24%;    
+        padding: 2%;
+        width: 50%;
         border-radius: 15px 50px 30px;
         background:rgb(187, 202, 207);
     }

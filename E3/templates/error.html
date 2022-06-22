@@ -9,7 +9,13 @@
         <div class="container">
 			<div class="box">
             	{% if erro %}
-                    <h2> Alguma coisa deu errado! Verifique que:</h2>
+
+                    {% if inicioErro %}
+                        <h2> {{ inicioErro }} Verifique se:</h2>
+                    {% else %}
+                        <h2> Algo deu errado! Verifique se:</h2>
+                    {% endif %}	
+                    
                     <h3> &emsp;• Não adicionou elementos repetidos! </h3>
                     <h3> &emsp;• Procurou por algo que não existe! </h3>
                     <h2> Mais informações : </h2>
@@ -47,18 +53,18 @@
     }
     
     .container .box {
-    	margin:50px;  
-        width: 90%;
-        padding:10px;
+    	text-align: center;
+        margin-top:30px;
+        margin-left:24%;  
+        padding: 2%;
+        width: 50%;
         border-radius: 15px 50px 30px;
-        background:rgb(218, 160, 160);
+        background:rgb(214, 160, 160);
     }
     
     button{
         border-radius: 5px;
         height : 25px;
-        color: rgb(0, 0, 0);
-        font-family: "Bahnschrift SemiBold";
         margin-top: 10px;
     	width : 50%;
         font-family: "Bahnschrift SemiBold";
@@ -67,6 +73,10 @@
     
     h2, h3 {
     	text-align: left;
+    }
+
+    p{
+    	font-size:13px;
     }
 
 </style>
