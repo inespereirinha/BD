@@ -8,13 +8,27 @@
     <h1 class="apresentacao">Base de Dados -- 3ª entrega</h1>
         <div class="container">
 			<div class="box">
-            	{% if cursor %}
+				{% if cursor %}
+                    <table border="2px">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                        </tr>
+                    </thead>
+                    <tbody>      
+                        {% for record in cursor %}
+                            <tr>
+                                <td>{{ record[0] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>    
                     <h2> Ação executada com sucesso!</h2>
                     <a href="/"><button>VOLTAR PARA A PÁGINA PRINCIPAL</button></a>
                 {% else %}
                     <h2> Erro: ao obter dados da base de dados!</h2>
                 {% endif %}	
-			</div>
+            </div>
 		</div>
     </body>
 </html>

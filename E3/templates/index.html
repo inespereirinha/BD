@@ -14,18 +14,18 @@
             
                         <form action = "inserirCategoriaSimples" method = "post">
                             <h3>Inserir Categoria Simples: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'">
+                            <input required type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'">
                             <input class="submit" type = "submit" value = "Let's Go!"/>
                         </form>
                         <form action = "inserirCategoriaRelacoes" method = "post">
                             <h3>Inserir Relações entre Categorias: </h3>
-                            <input type = "text" name = "categoria_super" placeholder="Nome Pai, ex.: 'Carne'">
-                            <input type = "text" name = "categoria_sub" placeholder="Nome Filho, ex.: 'Picanha'">
+                            <input required type = "text" name = "categoria_super" placeholder="Nome Pai, ex.: 'Carne'">
+                            <input required type = "text" name = "categoria_sub" placeholder="Nome Filho, ex.: 'Picanha'">
 							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                         <form action = "removerCategoria" method = "post">
                             <h3>Remover Categoria: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'"> 
+                            <input required type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'"> 
 							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
 					</div>
@@ -36,13 +36,13 @@
                         
                         <form action = "inserirRetalhista" method = "post">
                             <h3>Inserir Retalhista:</h3>
-                            <input type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'"/>
-                            <input type = "text" name = "retalhista_nome" placeholder="Nome, ex.: 'Butcher Inc.'"/>
+                            <input required type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'"/>
+                            <input required type = "text" name = "retalhista_nome" placeholder="Nome, ex.: 'Butcher Inc.'"/>
 							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                         <form action = "removerRetalhista" method = "post">
                             <h3>Remover Retalhista: </h3>
-                            <input type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'">
+                            <input required type = "text" name = "retalhista_tin" placeholder="TIN, ex.: '4098484'">
 							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                     </div>
@@ -51,7 +51,7 @@
                             categoria de produto;</h2>
                         <form action = "listarEventos" method = "post">
                             <h3>IVM (num_serie): </h3>
-                            <input type = "text" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310'"/>
+                            <input required type = "text" name = "ivm_num_serie" placeholder="Serial number, ex.: '155310'"/>
 							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                     </div>
@@ -59,7 +59,7 @@
                         <h2>d) Listar todas as sub-categorias de uma super-categoria, a todos os níveis de profundidade.</h2>
                         <form action = "listarCategorias" method = "post">
                             <h3>Categoria: </h3>
-                            <input type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'"/>
+                            <input required type = "text" name = "categoria_nome" placeholder="Nome, ex.: 'Carne'"/>
 							<input class="submit" type = "submit" value = "Let's Go!"/>                      
                         </form>
                     </div>

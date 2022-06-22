@@ -89,7 +89,7 @@ insert into Responsavel_por values ('Peixe', '2386323', '348164', 'Fabricante 3'
 /*insert into Responsavel_por values ('Iogurte', '1553610', '572734', 'Fabricante 5');*/
 insert into Responsavel_por values ('Peixe', '0129249', '348164', 'Fabricante 3');
 insert into Responsavel_por values ('Carne', '0129249', '155310', 'Fabricante 1');
-insert into Responsavel_por values ('Queijo', '0129249', '209265', 'Fabricante 2');
+insert into Responsavel_por values ('Carne', '0129249', '209265', 'Fabricante 2');
 insert into Responsavel_por values ('Iogurte', '0129249', '572734', 'Fabricante 5');
 insert into Responsavel_por values ('Lacticinios', '0129249', '432944', 'Fabricante 4');
 

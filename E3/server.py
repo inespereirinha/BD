@@ -34,25 +34,27 @@ queries = [
   DELETE FROM Tem_outra WHERE super_categoria = %s OR categoria = %s; \
   DELETE FROM Super_categoria WHERE nome = %s; \
   DELETE FROM Categoria_simples WHERE nome = %s; \
-  IF EXISTS (SELECT * FROM tem_outra WHERE super_categoria = %s) \
-  BEGIN \
-    DELETE FROM Super_categoria WHERE super_categoria = %s; \
-    INSERT INTO Categoria_simples VALUES(%s); \
-  END \
-  DELETE FROM Categoria WHERE nome = %s;",
-
+  DELETE FROM Categoria WHERE nome = %s; \
+  INSERT INTO Categoria_simples (nome) SELECT nome FROM Super_categoria NATURAL JOIN Tem_outra WHERE Super_categoria.nome != Tem_outra.super_categoria GROUP BY nome; \
+  DELETE FROM Super_categoria WHERE nome IN (SELECT nome FROM Super_categoria NATURAL JOIN Tem_outra WHERE Super_categoria.nome != Tem_outra.super_categoria GROUP BY nome);",
 
   "INSERT INTO Retalhista VALUES (%s, %s);",
   
   "DELETE FROM Responsavel_por WHERE tin = %s; \
    DELETE FROM Evento_reposicao WHERE tin = %s; \
-   DELETE FROM Retalhista WHERE tin = %s",
+   DELETE FROM Retalhista WHERE tin = %s;",
 
-  "SELECT cat AS Categoria, unidades, instante FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %s ORDER BY instante GROUP BY cat;",
+  "SELECT cat, CAST(unidades AS VARCHAR(255)), CAST(instante AS VARCHAR(255)) FROM Evento_reposicao NATURAL JOIN Produto WHERE num_serie = %s ORDER BY instante;",
 
-  "SELECT categoria FROM Tem_outra WHERE super_categoria = %s;"
+  "SELECT categoria FROM Tem_outra WHERE super_categoria = %s;",
+
+  "INSERT INTO Responsavel_por VALUES(%s, %s, %s);"
 ]
 
+
+retalhista = []
+retalhista_tin = ""
+retalhista_nome = ""
 
 ## Runs the function once the root page is requested.
 ## The request comes with the folder structure setting ~/web as the root
@@ -78,7 +80,6 @@ def inserir_categoria_simples():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    print(request.form["categoria_nome"])
     cursor.execute(queries[0], (request.form["categoria_nome"],request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
@@ -114,7 +115,7 @@ def remover_categoria():
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     cat = request.form["categoria_nome"]
-    cursor.execute(queries[2], (cat, cat, cat, cat, cat, cat, cat, cat,cat,cat, cat, cat, cat))
+    cursor.execute(queries[2], (cat, cat, cat, cat, cat, cat, cat, cat, cat, cat,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
     return str(e) 
@@ -130,8 +131,13 @@ def inserir_retalhista():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[3], (request.form["retalhista_tin"], request.form["retalhista_nome"],))
-    return render_template("retalhista.html", params=request.args)
+    global retalhista
+    global retalhista_tin
+    global retalhista_nome
+    retalhista = []
+    retalhista_tin = request.form["retalhista_tin"]
+    retalhista_nome = request.form["retalhista_nome"]
+    return render_template("retalhista.html", retalhista_tin=retalhista_tin, retalhista_nome=retalhista_nome)
   except Exception as e:
     return str(e) 
   finally:
@@ -163,7 +169,7 @@ def listar_eventos():
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     cursor.execute(queries[5], (request.form["ivm_num_serie"]),)
-    return render_template("success.html", cursor=cursor)
+    return render_template("successSelectIVM.html", cursor=cursor)
   except Exception as e:
     return str(e) 
   finally:
@@ -179,7 +185,7 @@ def listar_categorias():
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     cursor.execute(queries[6], (request.form["categoria_nome"],))
-    return render_template("success.html", cursor=cursor)
+    return render_template("successSelectCategoria.html", cursor=cursor)
   except Exception as e:
     return str(e) 
   finally:
@@ -187,6 +193,40 @@ def listar_categorias():
     dbConn.close()
 
 
-app.run(host = '0.0.0.0', port=5000)
+@app.route('/adicionarResponsabilidades', methods=["POST"])
+def adicionar_responsabilidades():
+  dbConn=None
+  cursor=None
+  try:
+    dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+    cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+    global retalhista
+    global retalhista_tin
+    global retalhista_nome
+    if request.form['action'] == 'NEXT':
+      retalhista.append([request.form["categoria_nome"], request.form["ivm_num_serie"], request.form["ivm_fabricante"]])
+      return render_template("retalhista.html", retalhista_tin=retalhista_tin, retalhista_nome=retalhista_nome)
+    elif request.form['action'] == 'CANCEL':
+      retalhista = []
+      retalhista_tin = ""
+      retalhista_nome = ""
+      print("ola meu povo2")
+      return render_template("index.html", cursor=cursor)
+    else :
+      if request.form["categoria_nome"] != "" and request.form["ivm_num_serie"] != "" and request.form["ivm_fabricante"] != "":
+        retalhista.append([request.form["categoria_nome"], request.form["ivm_num_serie"], request.form["ivm_fabricante"]])
+      cursor.execute(queries[3], (retalhista_tin, retalhista_nome,))
+      for elem in retalhista:
+        cursor.execute(queries[7], (elem[0], retalhista_tin, elem[1], elem[2],))  
+      cursor.commit()
+      return render_template("success.html", cursor=cursor)
+  except Exception as e:
+    return str(e) 
+  finally:
+    cursor.close()
+    dbConn.close()
+
+
+app.run(host = '0.0.0.0', port=5001)
 
 
