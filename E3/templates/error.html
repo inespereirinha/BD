@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <head>
+        <title> Base de Dados </title>
+    </head>
+    <body>
+    <h1 class="apresentacao">Base de Dados -- 3ª entrega</h1>
+        <div class="container">
+			<div class="box">
+            	{% if erro %}
+                    <h2> Alguma coisa deu errado! Verifique que:</h2>
+                    <h3> &emsp;• Não adicionou elementos repetidos! </h3>
+                    <h3> &emsp;• Procurou por algo que não existe! </h3>
+                    <h2> Mais informações : </h2>
+                    <p>{{ erro }}</p>
+                    <a href="/"><button>VOLTAR PARA A PÁGINA PRINCIPAL</button></a>
+                {% else %}
+                    <h2> Erro: ao obter dados da base de dados!</h2>
+                {% endif %}	
+			</div>
+		</div>
+    </body>
+</html>
+<style>
+    
+    body {
+        background: rgb(245, 245, 245);
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        left: 0;
+        right: 0;
+      
+        font-family: "Bahnschrift Light";
+        background-repeat: no-repeat;
+        text-align:center;
+    }
+    
+    div{
+    	font-size: 12px;
+        text-align: center;
+    }
+
+    .apresentacao{
+        color : rgb(172, 73, 73);
+    }
+    
+    .container .box {
+    	margin:50px;  
+        width: 90%;
+        padding:10px;
+        border-radius: 15px 50px 30px;
+        background:rgb(218, 160, 160);
+    }
+    
+    button{
+        border-radius: 5px;
+        height : 25px;
+        color: rgb(0, 0, 0);
+        font-family: "Bahnschrift SemiBold";
+        margin-top: 10px;
+    	width : 50%;
+        font-family: "Bahnschrift SemiBold";
+        background:rgb(172, 73, 73);
+    }
+    
+    h2, h3 {
+    	text-align: left;
+    }
+
+</style>

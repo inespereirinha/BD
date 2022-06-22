@@ -40,6 +40,7 @@ insert into IVM values ('209265', 'Fabricante 2');
 insert into IVM values ('348164', 'Fabricante 3');
 insert into IVM values ('432944', 'Fabricante 4');
 insert into IVM values ('572734', 'Fabricante 5');
+insert into IVM values ('111111', 'Fabricante 6');
 
 insert into Ponto_de_Retalho values ('Sage', 'Lisboa', 'Sintra');
 insert into Ponto_de_Retalho values ('Olisoft', 'Lisboa', 'Mafra');

@@ -48,7 +48,7 @@ queries = [
 
   "SELECT categoria FROM Tem_outra WHERE super_categoria = %s;",
 
-  "INSERT INTO Responsavel_por VALUES(%s, %s, %s);"
+  "INSERT INTO Responsavel_por VALUES(%s, %s, %s, %s);"
 ]
 
 
@@ -67,7 +67,7 @@ def init():
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
     return render_template("index.html", cursor=cursor)
   except Exception as e:
-    return str(e) #Renders a page with the error.
+    return render_template("error.html", erro=e) #Renders a page with the error.
   finally:
     cursor.close()
     dbConn.close()
@@ -83,7 +83,7 @@ def inserir_categoria_simples():
     cursor.execute(queries[0], (request.form["categoria_nome"],request.form["categoria_nome"],))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return str(e)
+    return render_template("error.html", erro=e)
   finally:
     cursor.close()
     dbConn.commit()
@@ -101,7 +101,7 @@ def inserir_categoria_relacoes():
     cursor.execute(queries[1], (super_cat, super_cat, sub_cat, sub_cat, super_cat, sub_cat,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.commit()
@@ -118,7 +118,7 @@ def remover_categoria():
     cursor.execute(queries[2], (cat, cat, cat, cat, cat, cat, cat, cat, cat, cat,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.commit()
@@ -139,7 +139,7 @@ def inserir_retalhista():
     retalhista_nome = request.form["retalhista_nome"]
     return render_template("retalhista.html", retalhista_tin=retalhista_tin, retalhista_nome=retalhista_nome)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.close()
@@ -155,7 +155,7 @@ def remover_retalhista():
     cursor.execute(queries[4], (tin, tin, tin,))
     return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.commit()
@@ -168,10 +168,10 @@ def listar_eventos():
   try:
     dbConn = psycopg2.connect(DB_CONNECTION_STRING)
     cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
-    cursor.execute(queries[5], (request.form["ivm_num_serie"]),)
+    cursor.execute(queries[5], (request.form["ivm_num_serie"],))
     return render_template("successSelectIVM.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.close()
@@ -187,7 +187,7 @@ def listar_categorias():
     cursor.execute(queries[6], (request.form["categoria_nome"],))
     return render_template("successSelectCategoria.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.close()
@@ -210,18 +210,22 @@ def adicionar_responsabilidades():
       retalhista = []
       retalhista_tin = ""
       retalhista_nome = ""
-      print("ola meu povo2")
       return render_template("index.html", cursor=cursor)
     else :
       if request.form["categoria_nome"] != "" and request.form["ivm_num_serie"] != "" and request.form["ivm_fabricante"] != "":
         retalhista.append([request.form["categoria_nome"], request.form["ivm_num_serie"], request.form["ivm_fabricante"]])
+      
       cursor.execute(queries[3], (retalhista_tin, retalhista_nome,))
+      
       for elem in retalhista:
+        print(elem)
         cursor.execute(queries[7], (elem[0], retalhista_tin, elem[1], elem[2],))  
-      cursor.commit()
+        print("hua")
+      
+      dbConn.commit()
       return render_template("success.html", cursor=cursor)
   except Exception as e:
-    return str(e) 
+    return render_template("error.html", erro=e) 
   finally:
     cursor.close()
     dbConn.close()
