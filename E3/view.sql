@@ -1,5 +1,3 @@
-DROP VIEW IF EXISTS vendas;
-
 CREATE VIEW vendas (ean, cat, ano, trimestre, mes, dia_mes, dia_semana, distrito, concelho, unidades) AS 
 SELECT R.ean, C.nome AS cat, 
 	 EXTRACT(YEAR FROM R.instante) AS ano, EXTRACT(QUARTER FROM R.instante) AS trimestre,
