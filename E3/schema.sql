@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS vendas;
 DROP TABLE IF EXISTS Evento_reposicao;
 DROP TABLE IF EXISTS Responsavel_por;
 DROP TABLE IF EXISTS Retalhista;
