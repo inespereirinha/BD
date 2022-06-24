@@ -8,9 +8,19 @@
     <h1 class="apresentacao">Base de Dados -- 3ª entrega</h1>
         <div class="container">
 			<div class="box">
-            	{% if cursor %}
-                    <h2> Ação executada com sucesso!</h2>
-                    <a href="/"><button>VOLTAR PARA A PÁGINA PRINCIPAL</button></a>
+            	{% if erro %}
+
+                    {% if inicioErro %}
+                        <h2> {{ inicioErro }} Verifique se:</h2>
+                    {% else %}
+                        <h2> Algo deu errado! Verifique se:</h2>
+                    {% endif %}	
+                    
+                    <h3> &emsp;• Não adicionou elementos repetidos! </h3>
+                    <h3> &emsp;• Procurou por algo que não existe! </h3>
+                    <h2> Mais informações : </h2>
+                    <p>{{ erro }}</p>
+                    <a href="http://web2.tecnico.ulisboa.pt/ist196848/app.cgi/"><button>VOLTAR PARA A PÁGINA PRINCIPAL</button></a>
                 {% else %}
                     <h2> Erro: ao obter dados da base de dados!</h2>
                 {% endif %}	
@@ -43,13 +53,13 @@
     }
     
     .container .box {
-        text-align: center;
+    	text-align: center;
         margin-top:30px;
         margin-left:24%;  
         padding: 2%;
         width: 50%;
         border-radius: 15px 50px 30px;
-        background:rgb(187, 202, 207);
+        background:rgb(214, 160, 160);
     }
     
     button{
@@ -58,11 +68,15 @@
         margin-top: 10px;
     	width : 50%;
         font-family: "Bahnschrift SemiBold";
-        background:rgb(143, 190, 204);
+        background:rgb(172, 73, 73);
     }
     
     h2, h3 {
     	text-align: left;
+    }
+
+    p{
+    	font-size:13px;
     }
 
 </style>
