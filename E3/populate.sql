@@ -48,7 +48,7 @@ insert into IVM values ('999999', 'Fabricante 9');
 
 insert into Ponto_de_Retalho values ('Sage', 'Lisboa', 'Sintra');
 insert into Ponto_de_Retalho values ('Olisoft', 'Lisboa', 'Mafra');
-insert into Ponto_de_Retalho values ('Geocargo', 'Santarém', 'Ferreira do Zêzere');
+insert into Ponto_de_Retalho values ('Geocargo', 'Santarém', 'Ferreira do Zêzere'); 
 insert into Ponto_de_Retalho values ('Vitopal', 'Leiria', 'Alcobaça');
 
 insert into Instalada_em values ('999999', 'Fabricante 9', 'Geocargo');
@@ -123,16 +123,16 @@ insert into Evento_reposicao values ('9784444444444', 1, '999999', 'Fabricante 9
 insert into Evento_reposicao values ('9784444444445', 2, '999999', 'Fabricante 9', '2018-02-10 13:30:15', 8, 'RET004');
 insert into Evento_reposicao values ('9782222222222', 1, '888888', 'Fabricante 8', '2019-03-2 13:30:15', 5, 'RET022');
 insert into Evento_reposicao values ('9782222222223', 2, '888888', 'Fabricante 8', '2019-04-25 13:30:15', 9, 'RET022');
-insert into Evento_reposicao values ('9783333333333', 1, '777777', 'Fabricante 7', '2019-05-11 13:30:15', 7, 'RET001');
-insert into Evento_reposicao values ('9783333333334', 2, '777777', 'Fabricante 7', '2020-06-17 13:30:15', 6, 'RET001');
-insert into Evento_reposicao values ('9781111111112', 1, '666666', 'Fabricante 6', '2020-07-30 13:30:15', 4, 'RET003');
-insert into Evento_reposicao values ('9781111111111', 2, '666666', 'Fabricante 6', '2021-08-28 13:30:15', 10, 'RET003');
-insert into Evento_reposicao values ('9782222222222', 1, '555555', 'Fabricante 5', '2018-01-6 13:30:15', 10, 'RET004');
-insert into Evento_reposicao values ('9782222222222', 2, '555555', 'Fabricante 5', '2018-02-15 13:30:15', 8, 'RET004');
-insert into Evento_reposicao values ('9784444444445', 1, '444444', 'Fabricante 4', '2019-03-13 13:30:15', 5, 'RET022');
-insert into Evento_reposicao values ('9784444444444', 2, '444444', 'Fabricante 4', '2019-04-21 13:30:15', 9, 'RET022');
-insert into Evento_reposicao values ('9781111111112', 1, '333333', 'Fabricante 3', '2019-05-4 13:30:15', 7, 'RET001');
-insert into Evento_reposicao values ('9781111111112', 2, '333333', 'Fabricante 3', '2020-06-23 13:30:15', 6, 'RET001');
-insert into Evento_reposicao values ('9783333333334', 1, '222222', 'Fabricante 2', '2020-07-12 13:30:15', 4, 'RET003');
-insert into Evento_reposicao values ('9783333333333', 2, '222222', 'Fabricante 2', '2021-08-15 13:30:15', 10, 'RET003');
-insert into Evento_reposicao values ('9782222222222', 2, '111111', 'Fabricante 1', '2022-10-7 13:30:15', 2, 'RET002');
+insert into Evento_reposicao values ('9783333333333', 1, '777777', 'Fabricante 7', '2019-05-11 13:30:15', 7, 'RET003');
+insert into Evento_reposicao values ('9783333333334', 2, '777777', 'Fabricante 7', '2020-06-17 13:30:15', 6, 'RET003');
+insert into Evento_reposicao values ('9781111111112', 1, '666666', 'Fabricante 6', '2020-07-30 13:30:15', 4, 'RET001');
+insert into Evento_reposicao values ('9781111111111', 2, '666666', 'Fabricante 6', '2021-08-28 13:30:15', 10, 'RET001');
+insert into Evento_reposicao values ('9782222222222', 1, '555555', 'Fabricante 5', '2018-01-6 13:30:15', 10, 'RET002');
+insert into Evento_reposicao values ('9782222222222', 2, '555555', 'Fabricante 5', '2018-02-15 13:30:15', 8, 'RET002');
+insert into Evento_reposicao values ('9784444444445', 1, '444444', 'Fabricante 4', '2019-03-13 13:30:15', 5, 'RET005');
+insert into Evento_reposicao values ('9784444444444', 2, '444444', 'Fabricante 4', '2019-04-21 13:30:15', 9, 'RET005');
+insert into Evento_reposicao values ('9781111111112', 1, '333333', 'Fabricante 3', '2019-05-4 13:30:15', 7, 'RET005');
+insert into Evento_reposicao values ('9781111111112', 2, '333333', 'Fabricante 3', '2020-06-23 13:30:15', 6, 'RET005');
+insert into Evento_reposicao values ('9783333333334', 1, '222222', 'Fabricante 2', '2020-07-12 13:30:15', 4, 'RET005');
+insert into Evento_reposicao values ('9783333333333', 2, '222222', 'Fabricante 2', '2021-08-15 13:30:15', 10, 'RET005');
+insert into Evento_reposicao values ('9782222222222', 2, '111111', 'Fabricante 1', '2022-10-7 13:30:15', 2, 'RET005');

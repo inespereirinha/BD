@@ -6,7 +6,7 @@ número total de artigos vendidos:
 
 SELECT dia_semana, concelho, SUM (unidades) as total
 FROM vendas
-WHERE ano BETWEEN 2020 AND 2023 
+WHERE ano BETWEEN 2020 AND 2022
 GROUP BY 
 GROUPING SETS(dia_semana, concelho, ()); 
 
