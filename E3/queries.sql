@@ -20,12 +20,12 @@ SELECT nome FROM retalhista WHERE tin IN(
 	WHERE nome_cat IN (SELECT nome FROM categoria_simples)
 	GROUP BY R.tin
 	HAVING COUNT(nome_cat) = (SELECT COUNT(*) FROM categoria_simples)
-)
+);
 
 /* Quais os produtos (ean) que nunca foram repostos? */
 (SELECT ean FROM Produto)
 EXCEPT
-(SELECT ean FROM Produto WHERE ean IN (SELECT ean FROM Evento_reposicao));
+(SELECT ean FROM Evento_reposicao);
 
 
 /* Quais os produtos (ean) que foram repostos sempre pelo mesmo retalhista? */

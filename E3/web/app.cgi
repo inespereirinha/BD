@@ -80,7 +80,7 @@ def update_balance():
 
 
 @app.route('/catlevels')
-def alter_balance():
+def alter_balance2(): # ----------------
   try:
     return render_template("balance.html", params=request.args)
   except Exception as e:

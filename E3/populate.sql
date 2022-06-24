@@ -107,7 +107,6 @@ insert into Retalhista values ('RET003', 'João dos Queijos');
 insert into Retalhista values ('RET004', 'Iogu');
 insert into Retalhista values ('RET005', 'Sweet Drop');
 
-
 insert into Responsavel_por values ('Carne', 'RET005', '111111', 'Fabricante 1');
 insert into Responsavel_por values ('Queijo', 'RET005', '222222', 'Fabricante 2');
 insert into Responsavel_por values ('Peixe', 'RET005', '333333', 'Fabricante 3');
@@ -118,14 +117,13 @@ insert into Responsavel_por values ('Queijo', 'RET003', '777777', 'Fabricante 7'
 insert into Responsavel_por values ('Carne', 'RET022', '888888', 'Fabricante 8');
 insert into Responsavel_por values ('Iogurte', 'RET004', '999999', 'Fabricante 9');
 
-
 insert into Evento_reposicao values ('9784444444444', 1, '999999', 'Fabricante 9', '2018-01-14 13:30:15', 10, 'RET004');
 insert into Evento_reposicao values ('9784444444445', 2, '999999', 'Fabricante 9', '2018-02-10 13:30:15', 8, 'RET004');
 insert into Evento_reposicao values ('9782222222222', 1, '888888', 'Fabricante 8', '2019-03-2 13:30:15', 5, 'RET022');
 insert into Evento_reposicao values ('9782222222223', 2, '888888', 'Fabricante 8', '2019-04-25 13:30:15', 9, 'RET022');
 insert into Evento_reposicao values ('9783333333333', 1, '777777', 'Fabricante 7', '2019-05-11 13:30:15', 7, 'RET003');
-insert into Evento_reposicao values ('9783333333334', 2, '777777', 'Fabricante 7', '2020-06-17 13:30:15', 6, 'RET003');
-insert into Evento_reposicao values ('9781111111112', 1, '666666', 'Fabricante 6', '2020-07-30 13:30:15', 4, 'RET001');
+insert into Evento_reposicao values ('9783333333334', 2, '777777', 'Fabricante 7', '2020-06-17 13:30:15', 8, 'RET003');
+insert into Evento_reposicao values ('9781111111112', 1, '666666', 'Fabricante 6', '2020-07-30 13:30:15', 6, 'RET001');
 insert into Evento_reposicao values ('9781111111111', 2, '666666', 'Fabricante 6', '2021-08-28 13:30:15', 10, 'RET001');
 insert into Evento_reposicao values ('9782222222222', 1, '555555', 'Fabricante 5', '2018-01-6 13:30:15', 10, 'RET002');
 insert into Evento_reposicao values ('9782222222222', 2, '555555', 'Fabricante 5', '2018-02-15 13:30:15', 8, 'RET002');
